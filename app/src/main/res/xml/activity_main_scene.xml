@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <!-- duration은 애니메이션 동작시간 당연히 낮을수록 속도는 빠름 -->
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="800">
+
+        <!-- frameposition 시작점이 0 끝이 100인데,
+             시작을 0으로 두면, 원래는 작아졌다가 커져야되는데, 처음부터 작아져있음 scale 이 0.7로 줄었다가 커지는게 아닌
+             처음부터 0.7이 되있는상태, 끝을 시작값과 똑같이 30으로 두면 완전히 커졌다가 다시 그 30일때 시작점 (scale 1)
+             상태로 다시 돌아옴 애니메이션 타임라인?같은거라고 생각하면 될듯-->
+        <KeyFrameSet>
+            <KeyAttribute
+                motion:motionTarget="@+id/test_img"
+                motion:framePosition="30"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
+            <KeyAttribute
+                motion:motionTarget="@+id/test_img"
+                motion:framePosition="100"
+                android:scaleX="30"
+                android:scaleY="30" />
+        </KeyFrameSet>
+
+        <!-- 클릭했을 경우 애니메이션 동작하도록, 클릭리스너라고 보면 됨 -->
+        <OnClick motion:targetId="@+id/test_img"
+            motion:clickAction="toggle"/>
+    </Transition>
+
+
+    <!-- 주석처리하면 클릭시가 아닌 자동으로 애니메이션 동작 -->
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+    </ConstraintSet>
+</MotionScene>
